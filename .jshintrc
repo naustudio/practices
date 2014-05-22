@@ -1,0 +1,19 @@
+{
+	"bitwise": true,
+	"browser": true,
+	"curly": true,
+	"devel": true,
+	"dojo": true,
+	"eqeqeq": true,
+	"es3": true,
+	"evil": true,
+	"globalstrict": true,
+	"jquery": true,
+	"noarg": true,
+	"regexdash": true,
+	"strict": true,
+	"sub": true,
+	"trailing": true,
+	"undef": true,
+	"unused": true
+}
