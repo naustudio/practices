@@ -65,9 +65,18 @@ body {
 }
 
 .content-wrapper {
-  max-width: 1024px;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
+}
+
+.icon-region {
+  width: 18px;
+  height: 18px;
+  background: url("../img/glyphicons-halflings.png");
+  display: inline-block;
+  background-position: 137px 20px;
+  margin-right: 5px;
 }
 
 .product-container {
@@ -76,16 +85,17 @@ body {
   max-width: 270px;
   background: #FFF;
   box-shadow: 4px 4px 10px #bdbdbd;
+  margin: 20px;
 }
 .product-container .product-content {
   text-align: center;
-  padding: 20px 20px 0;
+  padding: 20px 10px 0;
 }
 .product-container .product-image {
   width: 125px;
 }
 .product-container .product-des-container {
-  padding: 10px;
+  padding: 10px 0;
 }
 .product-container .product-name {
   text-transform: uppercase;
@@ -105,6 +115,21 @@ body {
   text-decoration: none;
   text-transform: uppercase;
   padding: 15px 0;
+}
+
+.pagination {
+  text-align: center;
+  padding: 20px 0;
+}
+.pagination .page {
+  text-decoration: none;
+  color: #111;
+  padding: 0 10px;
+  font-size: 1.2em;
+  line-height: 10px;
+}
+.pagination .page:hover {
+  background: #999;
 }
 
 .header {
