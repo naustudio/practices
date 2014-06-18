@@ -1,7 +1,7 @@
 <div class="product-container">
 	<div class="product-content <%= name %>">
 		<div class="image-wrapper">
-			<a href="<%= _id %>" class="image-link">
+			<a href="#!<%= _id %>" class="image-link">
 				<img src="src/pics/<%= picture %>" alt="<%= name %>" class="product-image">
 			</a>
 		</div>
@@ -11,5 +11,5 @@
 			<p class="product-region"><i class="icon-region"></i><%= region %>, <%= country %></p>
 		</div>
 	</div>
-	<a class="product-more-detail uppercase" data-id="<%= _id %>">Detail</a>
+	<a href="#!<%= _id %>" class="product-more-detail uppercase" data-id="<%= _id %>">Detail</a>
 </div><!-- .# end product -->

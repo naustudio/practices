@@ -5,7 +5,7 @@
 		 * Append into content wrapper
 		 */
 		function appendHTML(html, wrapper) {
-			$(wrapper).append(html);
+			$('.' + wrapper).append(html);
 		}
 
 		/**
@@ -51,6 +51,17 @@
 			});
 			return result;
 		}
+
+		/**
+		 * Clear wrapper content
+		 */
+		function clearWrapperContent(wrapper) {
+			$('.' + wrapper).html('');
+		}
+		/**
+		 * Unbind event
+		 */
+
 		/**
 		 * get database
 		 * @return {[type]} [description]
@@ -84,8 +95,8 @@
 				endPro = data.database.length - 1;
 			}
 			// get array of product's html
-			render(beginPro, endPro, data.database, '.content-inner');
-			appendHTML(pageHtml, '.pagination');
+			render(beginPro, endPro, data.database, 'content-inner');
+			appendHTML(pageHtml, 'pagination');
 
 
 		}).fail(function() {
@@ -115,16 +126,28 @@
 			// destroy exist element
 			$('.content-inner').text('');
 			// get array of product's html
-			render(beginPro, endPro, database.database, '.content-inner');
+			render(beginPro, endPro, database.database, 'content-inner');
 		});
 
 		/**
 		 * View detail
 		 */
-		$('.content-wrapper').on('click', '.product-more-detail', function() {
+		$('.content-wrapper').on('click', '.product-more-detail', function(e) {
+			// e.preventDefault();
 			var id = $(this).attr('data-id');
 			var product = getObjectByValue(database.database, id);
-			console.log(database.database[id]);
+			console.log(product);
+
+			// show detail
+			var productDetailHTML = new EJS({
+				url: 'src/templates/detail.ejs'})
+				.render(product[0]);
+
+			// clear product list
+			clearWrapperContent('content-wrapper');
+			// append product detail
+			appendHTML(productDetailHTML, 'content-wrapper');
+
 		});
 	});
 })(jQuery);
