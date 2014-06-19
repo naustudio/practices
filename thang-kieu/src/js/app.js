@@ -115,7 +115,7 @@
 		var url = location.href;
 		var currentPage = parseInt(getPageNo(url));
 
-		$.getJSON('http://192.168.0.199:3000/wines').done(function(data) {
+		$.getJSON('http://localhost:8080/src/data/database.json').done(function(data) {
 			database = data;
 			// get total of pages
 			var pages = database.length / qtyEachPage + 1;
@@ -179,7 +179,7 @@
 			// e.preventDefault();
 			var id = $(this).attr('data-id');
 			// parse id to Int
-			id = parseInt(id);
+			// id = parseInt(id);
 
 			var product = getObjectByValue(database, id);
 			console.log(product);

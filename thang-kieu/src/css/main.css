@@ -61,6 +61,26 @@ table {
   border-spacing: 0;
 }
 
+.button {
+  font-size: 1.2em;
+  text-decoration: none;
+  color: #111;
+  font-family: Tahoma;
+  text-align: center;
+  padding: 10px 20px;
+  border: 1px solid #686870;
+  border-radius: 100px;
+  color: #686870;
+  box-shadow: inset 0 3px 5px white, inset 0 18px 100px #c4c4c4, 0 1px 2px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.7);
+  transition: box-shadow .3s linear;
+}
+.button:hover {
+  box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.5), inset 0 18px 100px #c4c4c4;
+}
+.button:active {
+  box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.5), inset 0 18px 100px rgba(0, 0, 0, 0.7);
+}
+
 body {
   font-size: 16px;
   font-family: 'Ubuntu', sans-serif;
@@ -210,6 +230,16 @@ input {
   font-size: 1.1em;
   -webkit-appearance: none;
   appearance: none;
+  @keyframes showBorder {
+    0%, 100% {
+      border-color: transparent;
+    }
+
+    50% {
+      border-color: #999999;
+    }
+}
+
 }
 .product-detail-wrapper .text-input:hover,
 .product-detail-wrapper .select-input:hover {
@@ -217,16 +247,6 @@ input {
   -moz-animation: showBorder 3s infinite;
   -o-animation: showBorder 3s infinite;
   animation: showBorder 3s infinite;
-}
-@keyframes showBorder {
-  .product-detail-wrapper .text-input 0%  ,  100% ,
-  .product-detail-wrapper .select-input 0%  ,  100%  {
-    border-color: transparent;
-  }
-  .product-detail-wrapper .text-input 50% ,
-  .product-detail-wrapper .select-input 50%  {
-    border-color: #999999;
-  }
 }
 .product-detail-wrapper .text-input {
   width: 100%;
@@ -236,24 +256,12 @@ input {
   border-top: 2px solid #999;
 }
 .product-detail-wrapper .product-action .button {
-  background: #ececec;
-  border-radius: 10px;
-  width: 100px;
   display: inline-block;
-  padding: 10px;
-  text-align: center;
-  text-decoration: none;
-  line-height: 1.1;
-  color: #7f7f88;
-  border: 1px solid #d5d5e4;
-  box-shadow: 0px 1px 2px #d5d5e4, 0px 1px 3px white, 0px 1px 2px rgba(0, 0, 0, 0.1), 1px 0 2px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+  width: 100px;
 }
 .product-detail-wrapper .product-action .button:last-child {
   margin: 0;
-}
-.product-detail-wrapper .product-action .button.highlight {
-  background: #7f7f88;
-  color: white;
 }
 
 @keyframes showBorder {
@@ -265,6 +273,7 @@ input {
     border-color: #999999;
   }
 }
+
 @media only screen and (max-width: 1280px) {
   .content-inner {
     padding: 0 50px;
