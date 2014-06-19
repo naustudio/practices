@@ -4,7 +4,7 @@
 	</div>
 	<div class="product-info-detail-wrapper">
 		<div class="product-detail-content">
-			<div class="product-image">
+			<div class="product-image-wrapper">
 				<img src="src/pics/<%= picture %>" alt="<% picture %>" class="product-image">
 			</div>
 			<div class="product-info">
@@ -33,7 +33,7 @@
 					<select name="product-year" class="select-input year-select-input">
 						<%
 							var currentYear = new Date().getFullYear();
-							for(var i = currentYear ; i > currentYear - 100; i--) {
+							for(var i = currentYear ; i > currentYear - 10; i--) {
 						%>
 						<option value="<%= i %>" <% i == parseInt(year) ? "selected" : ""%>><%= i %></option>
 						<% } %>
@@ -47,8 +47,10 @@
 			<div class="clearfix"></div>
 		</div>
 	</div>
-	<div class="product-action">
-		<a href="#!save" class="save button">Save</a>
-		<a href="#!delete" class="delete button">Delete</a>
+	<div class="product-action-wrapper">
+		<div class="product-action">
+			<a href="#!save" class="save button highlight">Save</a>
+			<a href="#!delete" class="delete button">Delete</a>
+		</div>
 	</div>
 </div>

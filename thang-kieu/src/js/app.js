@@ -45,7 +45,7 @@
 		/**
 		 * Get object by id
 		 */
-		function getObjectByValue(array,id) {
+		function getObjectByValue(array, id) {
 			var result = array.filter(function(val) {
 				return val._id === id;
 			});
@@ -59,43 +59,84 @@
 			$('.' + wrapper).html('');
 		}
 		/**
-		 * Unbind event
+		 * Update
 		 */
+		function update(url, data) {
+			// $.post({
+			// 	url: url,
+			// 	data: data,
+			// 	success: success,
+			// 	dataType: {}
+			// });
+			$.ajax({
+				url: url,
+				type: 'POST',
+				crossDomain: true,
+				dataType: 'json',
+				data: data,
+				success: function(data) {
+					console.log(data);
+				},
+				error: function(jqXHR) {
+					console.log('ajax error ' + jqXHR.status);
+				},
+				headers: {
+					'Content-Type': 'application/json',
+					'X-HTTP-Method-Override': 'POST'
+				}
+			});
+			// $.ajax({
+			// 	url: url,
+			// 	type: 'POST',
+			// 	contentType: 'application/json',
+			// 	accepts: 'application/json',
+			// 	cache: false,
+			// 	dataType: 'json',
+			// 	data: JSON.stringify(data),
+			// 	success: function(data) {
+			// 		console.log(data);
+			// 	},
+			// 	error: function(jqXHR) {
+			// 		console.log('ajax error ' + jqXHR.status);
+			// 	}
+			// });
+		}
 
 		/**
 		 * get database
 		 * @return {[type]} [description]
 		 */
 		var database = {};
-		var products 	= [];
-		var pageHtml	= '';
+		// var products = [];
+		var pageHtml = '';
 		var qtyEachPage = 8;
-		var beginPro 	= 0;
+		var beginPro = 0;
+		var endPro = 0;
 		var url = location.href;
 		var currentPage = parseInt(getPageNo(url));
 
-		$.getJSON('src/data/database.json').done(function(data) {
+		$.getJSON('http://192.168.0.199:3000/wines').done(function(data) {
 			database = data;
 			// get total of pages
-			var pages = data.database.length / qtyEachPage + 1;
-			for (var i = 1; i< pages; i++) {
-				pageHtml += '<a href=#!/page/'+ i +' class="page page-'+ i +'" data-page="'+ i +'">'+ i +'</a>';
+			var pages = database.length / qtyEachPage + 1;
+			for (var i = 1; i < pages; i++) {
+				pageHtml += '<a href=#!/page/' + i + ' class="page page-' + i + '" data-page="' + i + '">' + i + '</a>';
 			}
 
-			if(currentPage) {
-				beginPro 	= qtyEachPage * (currentPage - 1);
-				endPro 		= beginPro + qtyEachPage;
+			if (currentPage) {
+				beginPro = qtyEachPage * (currentPage - 1);
+				endPro = beginPro + qtyEachPage;
 
 			} else {
 				beginPro = 0;
-				endPro	 = beginPro + qtyEachPage;
+				endPro = beginPro + qtyEachPage;
 			}
 			// if endPro greater than length of product number
-			if (endPro >= data.database.length) {
-				endPro = data.database.length - 1;
+			if (endPro >= database.length) {
+				endPro = database.length - 1;
 			}
 			// get array of product's html
-			render(beginPro, endPro, data.database, 'content-inner');
+			render(beginPro, endPro, database, 'product-content-wrapper');
 			appendHTML(pageHtml, 'pagination');
 
 
@@ -110,32 +151,37 @@
 		 */
 		$('.content-wrapper').on('click', '.page', function() {
 			var currentPage = $(this).attr('data-page');
+			var beginPro = 0;
+			var endPro = beginPro + qtyEachPage;
 
-			if(currentPage) {
-				beginPro 	= qtyEachPage * (currentPage - 1);
-				endPro 		= beginPro + qtyEachPage;
+			if (currentPage) {
+				beginPro = qtyEachPage * (currentPage - 1);
+				endPro = beginPro + qtyEachPage;
 
 			} else {
 				beginPro = 0;
-				endPro	 = beginPro + qtyEachPage;
+				endPro = beginPro + qtyEachPage;
 			}
 			// if endPro greater than length of product number
-			if (endPro >= database.database.length) {
-				endPro = database.database.length - 1;
+			if (endPro >= database.length) {
+				endPro = database.length - 1;
 			}
 			// destroy exist element
-			$('.content-inner').text('');
+			$('.product-content-wrapper').empty();
 			// get array of product's html
-			render(beginPro, endPro, database.database, 'content-inner');
+			render(beginPro, endPro, database, 'product-content-wrapper');
 		});
 
 		/**
 		 * View detail
 		 */
-		$('.content-wrapper').on('click', '.product-more-detail', function(e) {
+		$('.content-wrapper').on('click', '.product-more-detail', function() {
 			// e.preventDefault();
 			var id = $(this).attr('data-id');
-			var product = getObjectByValue(database.database, id);
+			// parse id to Int
+			id = parseInt(id);
+
+			var product = getObjectByValue(database, id);
 			console.log(product);
 
 			// show detail
@@ -144,10 +190,27 @@
 				.render(product[0]);
 
 			// clear product list
-			clearWrapperContent('content-wrapper');
+			clearWrapperContent('content-inner');
 			// append product detail
-			appendHTML(productDetailHTML, 'content-wrapper');
+			appendHTML(productDetailHTML, 'content-inner');
 
+		});
+
+		/**
+		 * Update
+		 */
+		$('.content-wrapper').on('click', '.save', function() {
+			var data = {
+				'name': 'LAN RIOJA CRIANZA',
+				'year': '2006',
+				'grapes': 'Tempranillo',
+				'country': 'Spain',
+				'region': 'Rioja',
+				'description': 'A resurgence of interest in boutique vineyards has opened the door for this excellent foray into the dessert wine market. Light and bouncy, with a hint of black truffle, this wine will not fail to tickle the taste buds.',
+				'picture': 'lan_rioja.jpg',
+				'_id': '506df6b6849a990200000002'
+			};
+			update('http://192.168.0.199:3000/wines/7', data);
 		});
 	});
 })(jQuery);
