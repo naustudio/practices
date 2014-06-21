@@ -157,7 +157,7 @@
 		var qtyEachPage = 8;
 		var pageNo = 1;
 		// var sourceUrl = 'http://0.0.0.0:3000/src/data/database.json';
-		var sourceUrl = 'http://192.168.0.199:3000/wines';
+		var sourceUrl = 'http://dev.naustud.io:3000/wines';
 
 		var currentHashTag = window.location.hash;
 		if (currentHashTag !== 'wines') {
@@ -232,7 +232,7 @@
 				'picture': 'lan_rioja.jpg',
 				'_id': '5'
 			};
-			update('http://192.168.0.199:3000/wines', data);
+			update('http://dev.naustud.io:3000/wines', data);
 		});
 	});
 })(jQuery);
