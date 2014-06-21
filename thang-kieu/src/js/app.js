@@ -56,18 +56,12 @@
 		 * Clear wrapper content
 		 */
 		function clearWrapperContent(wrapper) {
-			$('.' + wrapper).html('');
+			$('.' + wrapper).empty();
 		}
 		/**
 		 * Update
 		 */
 		function update(url, data) {
-			// $.post({
-			// 	url: url,
-			// 	data: data,
-			// 	success: success,
-			// 	dataType: {}
-			// });
 			$.ajax({
 				url: url,
 				type: 'POST',
@@ -85,21 +79,72 @@
 					'X-HTTP-Method-Override': 'POST'
 				}
 			});
-			// $.ajax({
-			// 	url: url,
-			// 	type: 'POST',
-			// 	contentType: 'application/json',
-			// 	accepts: 'application/json',
-			// 	cache: false,
-			// 	dataType: 'json',
-			// 	data: JSON.stringify(data),
-			// 	success: function(data) {
-			// 		console.log(data);
-			// 	},
-			// 	error: function(jqXHR) {
-			// 		console.log('ajax error ' + jqXHR.status);
-			// 	}
-			// });
+		}
+		/**
+		 * [listProduct description]
+		 * @param  {[type]} data [description]
+		 * @return {[type]}      [description]
+		 */
+		function showProductList(data, pageNo, qtyEachPage) {
+			var from = 0,
+				to = 0;
+			if (pageNo) {
+				from = qtyEachPage * (pageNo - 1);
+				to = from + qtyEachPage;
+
+			} else {
+				from = 0;
+				to = from + qtyEachPage;
+			}
+			// if to greater than length of product number
+			if (to >= data.length) {
+				to = data.length - 1;
+			}
+			// clear content of wrapper
+			clearWrapperContent('product-detail');
+			clearWrapperContent('product-content-wrapper');
+			// get array of product's html
+			render(from, to, data, 'product-content-wrapper');
+		}
+		/**
+		 * Show product detail
+		 */
+		function showProductDetail(data, id) {
+
+			var product = getObjectByValue(data, id);
+			var productDetailHTML = '';
+			if (product) {
+				// show detail
+				productDetailHTML = new EJS({ url: 'src/templates/detail.ejs' }).render(product[0]);
+
+				// clear product list
+				clearWrapperContent('product-detail');
+				// clear product list
+				clearWrapperContent('product-content-wrapper');
+				clearWrapperContent('pagination');
+			} else {
+				// append product detail
+				productDetailHTML = '<h2>This product is not found</h2>';
+			}
+			appendHTML(productDetailHTML, 'product-detail');
+		}
+
+		/**
+		 * add pagination
+		 */
+		function addPagination(length) {
+			// get total of pages
+			var pages = length / qtyEachPage + 1;
+			for (var i = 1; i < pages; i++) {
+				if (i === 1) {
+					pageHtml += '<li class="item"><a href=#wines/page/' + i + ' class="page active page-no page-' + i + '" data-page="' + i + '">' + i + '</a></li>';
+				} else {
+					pageHtml += '<li class="item"><a href=#wines/page/' + i + ' class="page page-no page-' + i + '" data-page="' + i + '">' + i + '</a></li>';
+				}
+			}
+
+			// append to content
+			appendHTML(pageHtml, 'pagination');
 		}
 
 		/**
@@ -110,35 +155,20 @@
 		// var products = [];
 		var pageHtml = '';
 		var qtyEachPage = 8;
-		var beginPro = 0;
-		var endPro = 0;
-		var url = location.href;
-		var currentPage = parseInt(getPageNo(url));
+		var pageNo = 1;
+		// var sourceUrl = 'http://0.0.0.0:3000/src/data/database.json';
+		var sourceUrl = 'http://192.168.0.199:3000/wines';
 
-		$.getJSON('http://localhost:8080/src/data/database.json').done(function(data) {
+		var currentHashTag = window.location.hash;
+		if (currentHashTag !== 'wines') {
+			window.location.hash = 'wines';
+		}
+
+		$.getJSON(sourceUrl).done(function(data) {
 			database = data;
-			// get total of pages
-			var pages = database.length / qtyEachPage + 1;
-			for (var i = 1; i < pages; i++) {
-				pageHtml += '<a href=#!/page/' + i + ' class="page page-' + i + '" data-page="' + i + '">' + i + '</a>';
-			}
 
-			if (currentPage) {
-				beginPro = qtyEachPage * (currentPage - 1);
-				endPro = beginPro + qtyEachPage;
-
-			} else {
-				beginPro = 0;
-				endPro = beginPro + qtyEachPage;
-			}
-			// if endPro greater than length of product number
-			if (endPro >= database.length) {
-				endPro = database.length - 1;
-			}
-			// get array of product's html
-			render(beginPro, endPro, database, 'product-content-wrapper');
-			appendHTML(pageHtml, 'pagination');
-
+			showProductList(database, pageNo, qtyEachPage);
+			addPagination(database.length);
 
 		}).fail(function() {
 			console.log('Fail to load database');
@@ -150,26 +180,12 @@
 		 * Pagination
 		 */
 		$('.content-wrapper').on('click', '.page', function() {
-			var currentPage = $(this).attr('data-page');
-			var beginPro = 0;
-			var endPro = beginPro + qtyEachPage;
-
-			if (currentPage) {
-				beginPro = qtyEachPage * (currentPage - 1);
-				endPro = beginPro + qtyEachPage;
-
-			} else {
-				beginPro = 0;
-				endPro = beginPro + qtyEachPage;
-			}
-			// if endPro greater than length of product number
-			if (endPro >= database.length) {
-				endPro = database.length - 1;
-			}
-			// destroy exist element
-			$('.product-content-wrapper').empty();
-			// get array of product's html
-			render(beginPro, endPro, database, 'product-content-wrapper');
+			// var pageNo = $(this).attr('data-page');
+			// // parse pageNo to Int
+			// pageNo = parseInt(pageNo);
+			// showProductList(database, pageNo, qtyEachPage);
+			$('.pagination .page').removeClass('active');
+			$(this).addClass('active');
 		});
 
 		/**
@@ -177,23 +193,29 @@
 		 */
 		$('.content-wrapper').on('click', '.product-more-detail', function() {
 			// e.preventDefault();
-			var id = $(this).attr('data-id');
-			// parse id to Int
-			// id = parseInt(id);
+			// var id = $(this).attr('data-id');
+			// // parse id to Int
+			// // id = parseInt(id);
+			// showProductDetail(database, id);
+		});
 
-			var product = getObjectByValue(database, id);
-			console.log(product);
+		/**
+		 * event: window.hashtag change
+		 */
+		$(window).on('hashchange', function() {
+			var currentHash = this.location.hash.replace(/#/, '');
 
-			// show detail
-			var productDetailHTML = new EJS({
-				url: 'src/templates/detail.ejs'})
-				.render(product[0]);
-
-			// clear product list
-			clearWrapperContent('content-inner');
-			// append product detail
-			appendHTML(productDetailHTML, 'content-inner');
-
+			if (currentHash === 'wines') {
+				showProductList(database, pageNo, qtyEachPage);
+			} else if (currentHash.indexOf('page/') !== -1) {
+				pageNo = currentHash.split('page/')[1];
+				pageNo = parseInt(pageNo);
+				showProductList(database, pageNo, qtyEachPage);
+			} else if (parseInt(currentHash.split('wines/')[1]) > 0) {
+				var id = parseInt(currentHash.split('wines/')[1]);
+				id = parseInt(id);
+				showProductDetail(database, id);
+			}
 		});
 
 		/**
@@ -208,9 +230,9 @@
 				'region': 'Rioja',
 				'description': 'A resurgence of interest in boutique vineyards has opened the door for this excellent foray into the dessert wine market. Light and bouncy, with a hint of black truffle, this wine will not fail to tickle the taste buds.',
 				'picture': 'lan_rioja.jpg',
-				'_id': '506df6b6849a990200000002'
+				'_id': '5'
 			};
-			update('http://192.168.0.199:3000/wines/7', data);
+			update('http://192.168.0.199:3000/wines', data);
 		});
 	});
 })(jQuery);
