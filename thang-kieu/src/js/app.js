@@ -73,13 +73,29 @@
 				},
 				error: function(jqXHR) {
 					console.log('ajax error ' + jqXHR.status);
-				},
-				headers: {
-					'Content-Type': 'application/json',
-					'X-HTTP-Method-Override': 'POST'
 				}
 			});
 		}
+
+		/**
+		 * Update
+		 */
+		function deleteWine(url, id) {
+			$.ajax({
+				url: url,
+				type: 'DELETE',
+				crossDomain: true,
+				dataType: 'json',
+				data: id,
+				success: function(data) {
+					console.log(data);
+				},
+				error: function(jqXHR) {
+					console.log('ajax error ' + jqXHR.status);
+				}
+			});
+		}
+
 		/**
 		 * [listProduct description]
 		 * @param  {[type]} data [description]
@@ -108,6 +124,7 @@
 				render(from, to, data, 'product-content-wrapper');
 			});
 		}
+
 		/**
 		 * Show product detail
 		 */
@@ -131,6 +148,23 @@
 				}
 				appendHTML(productDetailHTML, 'product-detail');
 			});
+		}
+
+		/**
+		 * Get new data form form
+		 */
+		function getData() {
+			var data = {
+				name: $('.name-text-input').val(),
+				year: $('.year-text-input').val(),
+				grapes: $('.grapes-text-input').val(),
+				country: $('.country-text-input').val(),
+				region: $('.region-text-input').val(),
+				description: $('.description-text-input').val(),
+				// picture: $('.-text-input').val(),
+				_id: $('.id-text-input').val(),
+			};
+			return data;
 		}
 
 		/**
@@ -219,15 +253,40 @@
 		});
 
 		/**
+		 * Add
+		 */
+		// $('.content-wrapper').on('click', '.add-wine', function() {
+		$('.add-wine').click( function() {
+			// window.event.preventDefault();
+			var form = new EJS({ url: 'src/templates/detail.ejs' }).render();
+
+			// clear product list
+			clearWrapperContent('product-detail');
+			// clear product list
+			clearWrapperContent('product-content-wrapper');
+			appendHTML(form, 'product-detail');
+		});
+
+		/**
 		 * Update
 		 */
 		$('.content-wrapper').on('click', '.save', function() {
 			var id = $('.id-text-input').val();
 			var url = sourceUrl + '/' + id;
-			$.getJSON(url).done(function(data) {
-				// var product = getObjectByValue(data, id);
-				data.name = 'NEW NAME';
-			});
+
+			var data = {};
+			data = getData();
+			update(url, data);
+		});
+
+		/**
+		 * Delete
+		 */
+		$('.content-wrapper').on('click', '.delete', function() {
+			var id = $('.id-text-input').val();
+			var url = sourceUrl + '' + id;
+
+			deleteWine(url, id);
 		});
 	});
 })(jQuery);

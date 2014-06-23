@@ -21,6 +21,12 @@ body {
 	background: #F8F8FF;
 }
 input { outline: none; }
+* {
+	-webkit-transform: translate3d(0, 0, 0);
+	-moz-transform: translate3d(0, 0, 0);
+	-o-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
 
 @mixin border() {
 	border-radius: $b-radius;
@@ -135,6 +141,8 @@ input { outline: none; }
 		margin: 0 auto;
 	}
 	.item {
+		border-radius: 5px;
+		border: 1px solid transparent;
 		display: inline-block;
 		a {
 			color: #111;
@@ -144,6 +152,14 @@ input { outline: none; }
 		}
 		&:last-child {
 			float: right;
+		}
+		&:hover {
+			border-color: #999;
+			box-shadow: inset 0 2px 3px #111;
+			-webkit-transition: border, box-shadow 1s;
+			-moz-transition: border, box-shadow 1s;
+			-o-transition: border, box-shadow 1s;
+			transition: border, box-shadow 1s;
 		}
 	}
 }
