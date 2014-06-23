@@ -85,66 +85,72 @@
 		 * @param  {[type]} data [description]
 		 * @return {[type]}      [description]
 		 */
-		function showProductList(data, pageNo, qtyEachPage) {
-			var from = 0,
-				to = 0;
-			if (pageNo) {
-				from = qtyEachPage * (pageNo - 1);
-				to = from + qtyEachPage;
+		function showProductList(pageNo, qtyEachPage) {
+			$.getJSON(sourceUrl).done(function(data) {
+				var from = 0,
+					to = 0;
+				if (pageNo) {
+					from = qtyEachPage * (pageNo - 1);
+					to = from + qtyEachPage;
 
-			} else {
-				from = 0;
-				to = from + qtyEachPage;
-			}
-			// if to greater than length of product number
-			if (to >= data.length) {
-				to = data.length - 1;
-			}
-			// clear content of wrapper
-			clearWrapperContent('product-detail');
-			clearWrapperContent('product-content-wrapper');
-			// get array of product's html
-			render(from, to, data, 'product-content-wrapper');
+				} else {
+					from = 0;
+					to = from + qtyEachPage;
+				}
+				// if to greater than length of product number
+				if (to >= data.length) {
+					to = data.length - 1;
+				}
+				// clear content of wrapper
+				clearWrapperContent('product-detail');
+				clearWrapperContent('product-content-wrapper');
+				// get array of product's html
+				render(from, to, data, 'product-content-wrapper');
+			});
 		}
 		/**
 		 * Show product detail
 		 */
 		function showProductDetail(data, id) {
+			var url = sourceUrl + '/' + id;
+			$.getJSON(url).done(function(data) {
+				// var product = getObjectByValue(data, id);
+				var productDetailHTML = '';
+				if (data) {
+					// show detail
+					productDetailHTML = new EJS({ url: 'src/templates/detail.ejs' }).render(data);
 
-			var product = getObjectByValue(data, id);
-			var productDetailHTML = '';
-			if (product) {
-				// show detail
-				productDetailHTML = new EJS({ url: 'src/templates/detail.ejs' }).render(product[0]);
-
-				// clear product list
-				clearWrapperContent('product-detail');
-				// clear product list
-				clearWrapperContent('product-content-wrapper');
-				clearWrapperContent('pagination');
-			} else {
-				// append product detail
-				productDetailHTML = '<h2>This product is not found</h2>';
-			}
-			appendHTML(productDetailHTML, 'product-detail');
+					// clear product list
+					clearWrapperContent('product-detail');
+					// clear product list
+					clearWrapperContent('product-content-wrapper');
+					clearWrapperContent('pagination');
+				} else {
+					// append product detail
+					productDetailHTML = '<h2>This product is not found</h2>';
+				}
+				appendHTML(productDetailHTML, 'product-detail');
+			});
 		}
 
 		/**
 		 * add pagination
 		 */
-		function addPagination(length) {
+		function addPagination() {
 			// get total of pages
-			var pages = length / qtyEachPage + 1;
-			for (var i = 1; i < pages; i++) {
-				if (i === 1) {
-					pageHtml += '<li class="item"><a href=#wines/page/' + i + ' class="page active page-no page-' + i + '" data-page="' + i + '">' + i + '</a></li>';
-				} else {
-					pageHtml += '<li class="item"><a href=#wines/page/' + i + ' class="page page-no page-' + i + '" data-page="' + i + '">' + i + '</a></li>';
+			$.getJSON(sourceUrl).done(function(data) {
+				var pages = data.length / qtyEachPage + 1;
+				for (var i = 1; i < pages; i++) {
+					if (i === 1) {
+						pageHtml += '<li class="item"><a href=#wines/page/' + i + ' class="page active page-no page-' + i + '" data-page="' + i + '">' + i + '</a></li>';
+					} else {
+						pageHtml += '<li class="item"><a href=#wines/page/' + i + ' class="page page-no page-' + i + '" data-page="' + i + '">' + i + '</a></li>';
+					}
 				}
-			}
 
-			// append to content
-			appendHTML(pageHtml, 'pagination');
+				// append to content
+				appendHTML(pageHtml, 'pagination');
+			});
 		}
 
 		/**
@@ -164,16 +170,10 @@
 			window.location.hash = 'wines';
 		}
 
-		$.getJSON(sourceUrl).done(function(data) {
-			database = data;
 
-			showProductList(database, pageNo, qtyEachPage);
-			addPagination(database.length);
+		showProductList(pageNo, qtyEachPage);
+		addPagination();
 
-		}).fail(function() {
-			console.log('Fail to load database');
-
-		});
 
 
 		/**
@@ -206,11 +206,11 @@
 			var currentHash = this.location.hash.replace(/#/, '');
 
 			if (currentHash === 'wines') {
-				showProductList(database, pageNo, qtyEachPage);
+				showProductList(pageNo, qtyEachPage);
 			} else if (currentHash.indexOf('page/') !== -1) {
 				pageNo = currentHash.split('page/')[1];
 				pageNo = parseInt(pageNo);
-				showProductList(database, pageNo, qtyEachPage);
+				showProductList(pageNo, qtyEachPage);
 			} else if (parseInt(currentHash.split('wines/')[1]) > 0) {
 				var id = parseInt(currentHash.split('wines/')[1]);
 				id = parseInt(id);
@@ -222,17 +222,12 @@
 		 * Update
 		 */
 		$('.content-wrapper').on('click', '.save', function() {
-			var data = {
-				'name': 'LAN RIOJA CRIANZA',
-				'year': '2006',
-				'grapes': 'Tempranillo',
-				'country': 'Spain',
-				'region': 'Rioja',
-				'description': 'A resurgence of interest in boutique vineyards has opened the door for this excellent foray into the dessert wine market. Light and bouncy, with a hint of black truffle, this wine will not fail to tickle the taste buds.',
-				'picture': 'lan_rioja.jpg',
-				'_id': '5'
-			};
-			update('http://dev.naustud.io:3000/wines', data);
+			var id = $('.id-text-input').val();
+			var url = sourceUrl + '/' + id;
+			$.getJSON(url).done(function(data) {
+				// var product = getObjectByValue(data, id);
+				data.name = 'NEW NAME';
+			});
 		});
 	});
 })(jQuery);
