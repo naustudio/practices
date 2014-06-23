@@ -137,12 +137,16 @@
 
 		jsData[id].description = $('#description').val();
 		$('#newId'+id).children('div').children('.description').text($('#description').val());
+
+		window.history.back();
+		alert('Cập nhận thông tin thành công');
 	});
 	$('#deleteWine').click(function(){
 
 		$('#newId'+id).remove();
 		delete jsData[id];
 		window.history.back();
+		alert('Xóa thành công');
 	});
 	</script>
 </html>
