@@ -1,0 +1,53 @@
+#wraper, #DetailWine{
+	margin: auto;
+	width: 1300px;
+}
+.linkWine{
+	color: black;
+
+}
+.wines{
+	width: 250px;
+	height: 200px;
+	border: 1px solid gray;
+	text-align: center;
+	float: left;
+	margin: 15px;
+	padding: 7px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 6px 6px -6px gray;
+	   -moz-box-shadow: 0 6px 6px -6px gray;
+	        box-shadow: 0 6px 6px -6px gray;
+}
+.wines:hover{
+	border: 1px solid blue;
+}
+.name{
+	font-size: 18px;
+	font-weight: bold;
+}
+.title{
+	width: 200px;
+	text-align: right;
+	margin-top: 50px;
+	padding-top: 0;
+}
+input{
+	width: 200px;
+	height: 20px;
+	text-align: left;
+	padding: 5px;
+	margin-left: 30px;
+	border-radius: 5px;
+	border: 1px solid gray;
+	margin-top: 30px;
+}
+
+table tr{
+		margin-top: 30px;
+	}
+.imgDetail{
+	float: right;
+	margin-top: -400px;
+	margin-right: 300px;
+}

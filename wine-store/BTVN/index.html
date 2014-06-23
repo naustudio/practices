@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="maincss.css">
+		<script src="jquery-1.11.0.min.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<section id="wraper">
+		<a href="#DetailWine/" class="linkWine">
+			<div class="wines">
+				<span class="img"><img src='abc' /></span><br>
+				<span class="name"></span><br>
+				<span class='year'></span>
+				<span class='grapes'></span><br>
+				<span class='region'></span>
+				<span class='country'></span>
+			</div>
+		</a>
+		</section>
+
+		<section id='DetailWine' style="Display: none">
+			<label>Detail Wine</label>
+			<hr>
+			<div>
+				<table>
+					<tr>
+						<td class='title'>Id</td>
+						<td><input id="id" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Name</td>
+						<td><input id="name" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Grape</td>
+						<td><input id="grapes" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Year</td>
+						<td><input id="year" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Regions</td>
+						<td><input id="region" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Country</td>
+						<td><input id="country" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Note</td>
+						<td><textarea id="note"></textarea></td>
+					</tr>
+					<tr>
+						<td><input id="saveWine" type='button' value="Save"/></td>
+						<td><input id="deleteWine" type='button' value="Delete"/></td>
+					</tr>
+				</table>
+				<div class='imgDetail'>retryerhj</div>
+			</div>
+		</section>
+	</body>
+
+	<script>
+
+
+	$(window).on('hashchange', function() {
+		var hash = window.location.hash;
+		$('section').hide();
+		if (hash == '')
+			$('#wraper').show();
+		else{
+			var map = hash.split('/');
+			var elem = map[0];
+			id = map[1];
+			$(map[0]).show();
+
+			$('#id').val(jsData[id]._id);
+			$('#name').val(jsData[id].name);
+			$('#grapes').val(jsData[id].grapes);
+			$('#year').val(jsData[id].year);
+			$('#region').val(jsData[id].region);
+			$('#country').val(jsData[id].country);
+			$('#note').val(jsData[id].description);
+			$('.imgDetail').html('<img width="200" src="http://dev.naustud.io:3000/pics/' + jsData[id].picture + '" />');
+		}
+	});
+
+
+	//lấy dữ liệu
+	$(document).ready(function(){
+		$.get('http://dev.naustud.io:3000/wines', function (data){
+			jsData = $.parseJSON(data);
+			var model = $('.linkWine');
+			for (var i = 0; i < jsData.length; i++){
+				var item = jsData[i];
+
+
+				$(model).attr('href', '#DetailWine/' + i);
+				$(model).children('div').children('.img').html('<img width="100" src="http://dev.naustud.io:3000/pics/' + item.picture + '" />');
+				$(model).children('div').children('.name').text(item.name);
+				$(model).children('div').children('.year').text(item.year);
+				$(model).children('div').children('.grapes').text(item.grapes);
+				$(model).children('div').children('.region').text(item.region + ', ');
+				$(model).children('div').children('.country').text(item.country);
+
+				$(model).attr('id','newId'+i);
+
+				var newItem = $(model).clone();
+
+
+				$('#wraper').append(newItem);
+			}
+
+			$(model).remove();
+		});
+
+
+	});
+
+	$('#saveWine').click(function(){
+		jsData[id].name = $('#name').val();
+		$('#newId'+id).children('div').children('.name').text($('#name').val());
+
+		jsData[id].year = $('#year').val();
+		$('#newId'+id).children('div').children('.year').text($('#year').val());
+
+		jsData[id].grapes = $('#grapes').val();
+		$('#newId'+id).children('div').children('.grapes').text($('#grapes').val());
+
+		jsData[id].region = $('#region').val();
+		$('#newId'+id).children('div').children('.region').text($('#region').val());
+
+		jsData[id].country = $('#country').val();
+		$('#newId'+id).children('div').children('.country').text($('#country').val());
+
+		jsData[id].description = $('#description').val();
+		$('#newId'+id).children('div').children('.description').text($('#description').val());
+	});
+	$('#deleteWine').click(function(){
+
+		$('#newId'+id).remove();
+		delete jsData[id];
+		window.history.back();
+	});
+	</script>
+</html>
