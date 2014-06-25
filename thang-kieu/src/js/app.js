@@ -258,7 +258,8 @@
 		// $('.content-wrapper').on('click', '.add-wine', function() {
 		$('.add-wine').click( function() {
 			// window.event.preventDefault();
-			var form = new EJS({ url: 'src/templates/detail.ejs' }).render();
+			var data = {};
+			var form = new EJS({ url: 'src/templates/form.ejs' }).render(data);
 
 			// clear product list
 			clearWrapperContent('product-detail');
