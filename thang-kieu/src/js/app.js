@@ -2,7 +2,7 @@
 	$(document).ready(function() {
 
 		/**
-		 * Append into content wrapper
+		 * Append content into content wrapper
 		 */
 		function appendHTML(html, wrapper) {
 			$('.' + wrapper).append(html);
@@ -36,15 +36,23 @@
 		/**
 		 * Load data into HTML
 		 */
-		function render(begin, end, data, wrapper) {
+		function render(begin, end, data, wrapper, pageNo) {
+			clearWrapperContent(wrapper);
+			// append product list content
+			var content = new EJS({
+				url: 'src/templates/product-list-inner.ejs'
+			}).render({});
+			appendHTML(content, wrapper);
+			addPagination(pageNo);
+
 			var products = getProductsHTML(begin, end, data);
 			var html = products.join('');
 
-			appendHTML(html, wrapper);
+			appendHTML(html, 'product-content-wrapper');
 		}
 		/**
 		 * Get object by id
-		 */
+		 *
 		function getObjectByValue(array, id) {
 			var result = array.filter(function(val) {
 				return val._id === id;
@@ -97,9 +105,7 @@
 		}
 
 		/**
-		 * [listProduct description]
-		 * @param  {[type]} data [description]
-		 * @return {[type]}      [description]
+		 * Show product list
 		 */
 		function showProductList(pageNo, qtyEachPage) {
 			$.getJSON(sourceUrl).done(function(data) {
@@ -119,9 +125,30 @@
 				}
 				// clear content of wrapper
 				clearWrapperContent('product-detail');
-				clearWrapperContent('product-content-wrapper');
+				clearWrapperContent('product-list');
 				// get array of product's html
-				render(from, to, data, 'product-content-wrapper');
+				render(from, to, data, 'product-list', pageNo);
+
+				/**
+				 * Using list
+				 */
+				var options = {
+					valueNames: [
+						'product-name',
+						'product-year',
+						'product-region',
+						'product-country'
+					]
+				};
+
+				var list = new List('product-list', options/*, values*/);
+
+				list.on('searchComplete', function(data) {
+					if ( data.visibleItems.length === 0) {
+						var msg = '<h2 class="error-msg">There is no product with your key word</h2>';
+						appendHTML(msg, 'list');
+					}
+				});
 			});
 		}
 
@@ -140,7 +167,7 @@
 					// clear product list
 					clearWrapperContent('product-detail');
 					// clear product list
-					clearWrapperContent('product-content-wrapper');
+					clearWrapperContent('product-list');
 					clearWrapperContent('pagination');
 				} else {
 					// append product detail
@@ -155,12 +182,12 @@
 		 */
 		function getData() {
 			var data = {
-				name: $('.name-text-input').val(),
-				year: $('.year-text-input').val(),
-				grapes: $('.grapes-text-input').val(),
-				country: $('.country-text-input').val(),
-				region: $('.region-text-input').val(),
-				description: $('.description-text-input').val(),
+				name: $('.product-name-text-input').val(),
+				year: $('.product-year-select-input').val(),
+				grapes: $('.product-grapes-text-input').val(),
+				country: $('.product-country-text-input').val(),
+				region: $('.product-region-text-input').val(),
+				description: $('.product-description-text-input').val(),
 				// picture: $('.-text-input').val(),
 				_id: $('.id-text-input').val(),
 			};
@@ -170,18 +197,19 @@
 		/**
 		 * add pagination
 		 */
-		function addPagination() {
+		function addPagination(page) {
+			var pageHtml = '';
 			// get total of pages
 			$.getJSON(sourceUrl).done(function(data) {
 				var pages = data.length / qtyEachPage + 1;
 				for (var i = 1; i < pages; i++) {
-					if (i === 1) {
+					if (i === page) {
 						pageHtml += '<li class="item"><a href=#wines/page/' + i + ' class="page active page-no page-' + i + '" data-page="' + i + '">' + i + '</a></li>';
 					} else {
 						pageHtml += '<li class="item"><a href=#wines/page/' + i + ' class="page page-no page-' + i + '" data-page="' + i + '">' + i + '</a></li>';
 					}
 				}
-
+				clearWrapperContent('pagination');
 				// append to content
 				appendHTML(pageHtml, 'pagination');
 			});
@@ -193,11 +221,11 @@
 		 */
 		var database = {};
 		// var products = [];
-		var pageHtml = '';
+		// var pageHtml = '';
 		var qtyEachPage = 8;
 		var pageNo = 1;
-		// var sourceUrl = 'http://0.0.0.0:3000/src/data/database.json';
-		var sourceUrl = 'http://dev.naustud.io:3000/wines';
+		var sourceUrl = 'http://0.0.0.0:3000/src/data/database.json';
+		// var sourceUrl = 'http://dev.naustud.io:3000/wines';
 
 		var currentHashTag = window.location.hash;
 		if (currentHashTag !== 'wines') {
@@ -206,8 +234,7 @@
 
 
 		showProductList(pageNo, qtyEachPage);
-		addPagination();
-
+		// addPagination();
 
 
 		/**
@@ -264,7 +291,7 @@
 			// clear product list
 			clearWrapperContent('product-detail');
 			// clear product list
-			clearWrapperContent('product-content-wrapper');
+			clearWrapperContent('product-list');
 			appendHTML(form, 'product-detail');
 		});
 
@@ -277,7 +304,7 @@
 
 			var data = {};
 			data = getData();
-			update(url, data);
+			// update(url, data);
 		});
 
 		/**
@@ -285,9 +312,22 @@
 		 */
 		$('.content-wrapper').on('click', '.delete', function() {
 			var id = $('.id-text-input').val();
-			var url = sourceUrl + '' + id;
+			var url = sourceUrl + '/' + id;
 
 			deleteWine(url, id);
+		});
+		/**
+		 *
+		 */
+		$(window).on('scroll', function() {
+			var top = $(this).scrollTop();
+			if (top > 30) {
+				$('.header').addClass('scroll');
+				$('.icon-add').addClass('icon-add-white');
+			} else {
+				$('.header').removeClass('scroll');
+				$('.icon-add').removeClass('icon-add-white');
+			}
 		});
 	});
 })(jQuery);

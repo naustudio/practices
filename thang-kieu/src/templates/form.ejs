@@ -5,7 +5,7 @@
 	<div class="product-info-detail-wrapper">
 		<div class="product-detail-content">
 			<div class="product-image-wrapper">
-				<img src="src/pics/" alt="" class="product-image">
+				<img src="src/pics/default.jpg" alt="" class="product-image">
 			</div>
 			<div class="product-info">
 				<div class="product-id row-field">
@@ -30,7 +30,7 @@
 				</div>
 				<div class="product-year row-field">
 					<label class="label">Year</label>
-					<select name="product-year" class="select-input year-select-input">
+					<select name="product-year" class="select-input product-year-select-input">
 						<%
 							var currentYear = new Date().getFullYear();
 							for(var i = currentYear ; i > currentYear - 10; i--) {
@@ -39,9 +39,9 @@
 						<% } %>
 					</select>
 				</div>
-				<div class="product-notes row-field">
+				<div class="product-description-wrapper row-field">
 					<label class="label">Notes</label>
-					<textarea name="product-notes" cols="30" rows="10" class="input text-input product-notes-text-input" placeholder="Enter your description"></textarea>
+					<textarea name="product-description" cols="30" rows="10" class="input text-input product-description-text-input" placeholder="Enter your description"></textarea>
 				</div>
 			</div>
 			<div class="clearfix"></div>
