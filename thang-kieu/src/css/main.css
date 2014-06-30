@@ -171,10 +171,8 @@ input {
   width: 100%;
   max-width: 270px;
   background: #FFF;
-  border: 1px solid transparent;
-  border-bottom-width: 5px;
   margin: 20px;
-  background: 0px 1px 2px whitesmoke, 0px -1px 2px whitesmoke, 1px 0 2px whitesmoke, -1px 0 2px whitesmoke;
+  box-shadow: 0 2px 1px transparent, 2px 0 1px transparent, 2px 2px 3px transparent;
 }
 .product-container .product-content {
   text-align: center;
@@ -208,17 +206,17 @@ input {
 .product-container .product-more-detail:hover {
   background: #1E90FF;
   color: whitesmoke;
-  -webkit-transition: background, color 1s;
-  -moz-transition: background, color 1s;
-  -o-transition: background, color 1s;
-  transition: background, color 1s;
+  -webkit-transition: color, background .8s;
+  -moz-transition: color, background .8s;
+  -o-transition: color, background .8s;
+  transition: color, background .8s;
 }
 .product-container:hover {
-  border-color: #999;
-  -webkit-transition: border-color 1s;
-  -moz-transition: border-color 1s;
-  -o-transition: border-color 1s;
-  transition: border-color 1s;
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.3), 2px 0 1px rgba(0, 0, 0, 0.3), 2px 2px 3px rgba(0, 0, 0, 0.5);
+  -webkit-transition: box-shadow .8s;
+  -moz-transition: box-shadow .8s;
+  -o-transition: box-shadow .8s;
+  transition: box-shadow .8s;
 }
 
 .pagination {
@@ -243,6 +241,7 @@ input {
 .header .item {
   border-radius: 5px;
   border: 1px solid transparent;
+  box-shadow: inset 0 2px 3px transparent;
   display: inline-block;
 }
 .header .item a {
@@ -327,7 +326,6 @@ input {
     border-color: #999999;
   }
 }
-
 @media only screen and (max-width: 1280px) {
   .content-inner {
     padding: 0 50px;
