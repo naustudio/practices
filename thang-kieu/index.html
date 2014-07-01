@@ -20,23 +20,18 @@
 <body>
 	<header class="header">
 		<ul class="nav">
-			<li class="item"><a href="wines"class="logo-name">Wine</a></li>
-			<li class="item"><a href="#add" class="add-wine">Add wines</a></li>
-			<li class="item"><a href="browser" class="browser-wines">Browser wines</a></li>
-			<li class="item"><a href="browser" class="about">About</a></li>
+			<li class="item"><a href="#wines"class="logo-name">Wine</a></li>
+			<li class="item"><a href="#add" class="add-wine"><i class="icon-add"></i>Add wines</a></li>
+			<li class="item"><a href="#wines" class="browser-wines">Browser wines</a></li>
+			<li class="item"><a href="#" class="about">About</a></li>
 		</ul>
 		<div class="clearfix"></div>
 	</header>
 
 	<section class="main content-wrapper">
 		<div class="content-inner">
-			<div class="product-list">
-				<div class="product-content-wrapper"></div>
-				<div class="pagination-wrapper">
-					<ul class="pagination">
+			<div class="product-list" id="product-list">
 
-					</ul>
-				</div>
 			</div>
 			<div class="product-detail">
 
@@ -50,7 +45,9 @@
 
 	<script src="src/js/jquery-1.11.0.min.js"></script>
 	<script src="src/js/ejs_0.9_alpha_1_production.js"></script>
+	<script type="text/javascript" src="src/js/list.min.js"></script>
 	<script type="text/javascript" src="src/js/app.js"></script>
+
 </body>
 
 </html>
