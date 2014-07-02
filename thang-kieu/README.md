@@ -12,3 +12,7 @@ Resources:
 Assignments
 1. Create page that list out all of wines loaded from server
 2. Create page for product detail when selecting on a particular product.
+
+
+NEW 
+- update

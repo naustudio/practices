@@ -199,6 +199,7 @@ input {
   background: #FFF;
   border-radius: 5px;
   margin: 20px;
+  overflow: hidden;
   box-shadow: 0 2px 1px transparent, 2px 0 1px transparent, 2px 2px 3px transparent;
 }
 .product-container .product-content {
