@@ -224,8 +224,8 @@
 		// var pageHtml = '';
 		var qtyEachPage = 8;
 		var pageNo = 1;
-		var sourceUrl = 'http://0.0.0.0:3000/src/data/database.json';
-		// var sourceUrl = 'http://dev.naustud.io:3000/wines';
+		// var sourceUrl = 'http://0.0.0.0:3000/src/data/database.json';
+		var sourceUrl = 'http://dev.naustud.io:3000/wines';
 
 		var currentHashTag = window.location.hash;
 		if (currentHashTag !== 'wines') {
@@ -273,8 +273,9 @@
 				pageNo = parseInt(pageNo);
 				showProductList(pageNo, qtyEachPage);
 			} else if (parseInt(currentHash.split('wines/')[1]) > 0) {
-				var id = parseInt(currentHash.split('wines/')[1]);
-				id = parseInt(id);
+				// var id = parseInt(currentHash.split('wines/')[1]);
+				// id = parseInt(id);
+				var id = currentHash.split('wines/')[1];
 				showProductDetail(database, id);
 			}
 		});
