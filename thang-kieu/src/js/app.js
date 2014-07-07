@@ -72,7 +72,7 @@
 		function update(url, data) {
 			$.ajax({
 				url: url,
-				type: 'POST',
+				type: 'PUT',
 				crossDomain: true,
 				dataType: 'json',
 				data: data,
@@ -96,7 +96,7 @@
 				dataType: 'json',
 				data: id,
 				success: function(data) {
-					console.log(data);
+					window.location.hash = "wines";
 				},
 				error: function(jqXHR) {
 					console.log('ajax error ' + jqXHR.status);
@@ -130,7 +130,7 @@
 				render(from, to, data, 'product-list', pageNo);
 
 				/**
-				 * Using list
+				 * Usingl ist
 				 */
 				var options = {
 					valueNames: [
@@ -305,9 +305,8 @@
 
 			var data = {};
 			data = getData();
-			// update(url, data);
+			update(url, data);
 		});
-
 		/**
 		 * Delete
 		 */
