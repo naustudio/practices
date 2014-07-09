@@ -15,11 +15,16 @@
 			var productsHTML = [];
 
 			while (begin !== end) {
-				productsHTML[begin] = new EJS({
-					url: 'src/templates/product.ejs'
-				}).render(data[begin]);
+				if (data[begin]) {
+					data[begin] = validateData(data[begin]);
+					productsHTML[begin] = new EJS({
+						url: 'src/templates/product.ejs'
+					}).render(data[begin]);
 
-				begin++;
+					begin++;
+				} else {
+					break;
+				}
 			}
 
 			return productsHTML;
@@ -59,7 +64,37 @@
 			});
 			return result;
 		}
+		/**
+		 * Validate data
+		 */
+		function validateData(data) {
+			if (data._id === undefined) {
+				data._id = '';
+			}
+			if (data.name === undefined) {
+				data.name = '';
+			}
+			if (data.grapes === undefined) {
+				data.grapes = '';
+			}
+			if (data.country === undefined) {
+				data.country = '';
+			}
+			if (data.region === undefined) {
+				data.region = '';
+			}
+			if (data.year === undefined) {
+				data.year = new Date();
+			}
+			if (data.description === undefined) {
+				data.description = '';
+			}
+			if (data.picture === undefined) {
+				data.picture = 'default.jpg';
+			}
 
+			return data;
+		}
 		/**
 		 * Clear wrapper content
 		 */
@@ -86,7 +121,26 @@
 		}
 
 		/**
-		 * Update
+		 * Add
+		 */
+		function save(url, data) {
+			$.ajax({
+				url: url,
+				type: 'POST',
+				crossDomain: true,
+				dataType: 'json',
+				data: data,
+				success: function(data) {
+					console.log(data);
+				},
+				error: function(jqXHR) {
+					console.log('ajax error ' + jqXHR.status);
+				}
+			});
+		}
+
+		/**
+		 * delete
 		 */
 		function deleteWine(url, id) {
 			$.ajax({
@@ -96,7 +150,7 @@
 				dataType: 'json',
 				data: id,
 				success: function(data) {
-					window.location.hash = "wines";
+					window.location.hash = 'wines';
 				},
 				error: function(jqXHR) {
 					console.log('ajax error ' + jqXHR.status);
@@ -121,7 +175,7 @@
 				}
 				// if to greater than length of product number
 				if (to >= data.length) {
-					to = data.length - 1;
+					to = data.length;
 				}
 				// clear content of wrapper
 				clearWrapperContent('product-detail');
@@ -162,6 +216,7 @@
 				var productDetailHTML = '';
 				if (data) {
 					// show detail
+					data = validateData(data);
 					productDetailHTML = new EJS({ url: 'src/templates/detail.ejs' }).render(data);
 
 					// clear product list
@@ -201,7 +256,7 @@
 			var pageHtml = '';
 			// get total of pages
 			$.getJSON(sourceUrl).done(function(data) {
-				var pages = data.length / qtyEachPage + 1;
+				var pages = parseInt(data.length / qtyEachPage) + 2;
 				for (var i = 1; i < pages; i++) {
 					if (i === page) {
 						pageHtml += '<li class="item"><a href=#wines/page/' + i + ' class="page active page-no page-' + i + '" data-page="' + i + '">' + i + '</a></li>';
@@ -241,10 +296,6 @@
 		 * Pagination
 		 */
 		$('.content-wrapper').on('click', '.page', function() {
-			// var pageNo = $(this).attr('data-page');
-			// // parse pageNo to Int
-			// pageNo = parseInt(pageNo);
-			// showProductList(database, pageNo, qtyEachPage);
 			$('.pagination .page').removeClass('active');
 			$(this).addClass('active');
 		});
@@ -253,11 +304,6 @@
 		 * View detail
 		 */
 		$('.content-wrapper').on('click', '.product-more-detail', function() {
-			// e.preventDefault();
-			// var id = $(this).attr('data-id');
-			// // parse id to Int
-			// // id = parseInt(id);
-			// showProductDetail(database, id);
 		});
 
 		/**
@@ -287,7 +333,8 @@
 		$('.add-wine').click( function() {
 			// window.event.preventDefault();
 			var data = {};
-			var form = new EJS({ url: 'src/templates/form.ejs' }).render(data);
+			data = validateData(data);
+			var form = new EJS({ url: 'src/templates/detail.ejs' }).render(data);
 
 			// clear product list
 			clearWrapperContent('product-detail');
@@ -307,6 +354,19 @@
 			data = getData();
 			update(url, data);
 		});
+
+		/**
+		 * Add new
+		 */
+		$('.content-wrapper').on('click', '.add', function() {
+			// var id = $('.id-text-input').val();
+			var url = sourceUrl;//  + '/' + id;
+
+			var data = {};
+			data = getData();
+			save(url, data);
+		});
+
 		/**
 		 * Delete
 		 */
