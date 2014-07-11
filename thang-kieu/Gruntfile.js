@@ -10,7 +10,7 @@ module.exports = function (grunt) {
 
 		dirs: {
 			js: 'src/js',
-			src: 'src',
+			src: 'exercise/',
 			doc: '../docs',
 			release: '~release',
 			deploy: '~deploy',
@@ -73,7 +73,7 @@ module.exports = function (grunt) {
 		watch: {
 			sass: {
 				files: [
-					'<%= dirs.src %>/css/**/*.scss'
+					'<%= dirs.src %>/css/*.scss'
 				],
 				tasks: ['sass']
 			},
@@ -81,10 +81,16 @@ module.exports = function (grunt) {
 				options: {
 					livereload: '<%= connect.options.livereload %>'
 				},
+				// files: [
+				// 	'*.html',
+				// 	'<%= dirs.src %>/**/*.js',
+				// 	'<%= dirs.src %>/**/*.ejs',
+				// 	'<%= dirs.src %>/css/*.css'
+				// ],
 				files: [
 					'*.html',
-					'<%= dirs.src %>/**/*.js',
-					'<%= dirs.src %>/**/*.ejs',
+					'<%= dirs.src %>/js/*.js',
+					'<%= dirs.src %>/*.html',
 					'<%= dirs.src %>/css/*.css'
 				]
 			}

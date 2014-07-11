@@ -1,0 +1,29 @@
+.body {
+	font-size: 16px;
+	p,
+	h3 	{ line-height: 1.6em }
+}
+.wrapper 	{ max-width: 1000px; margin: 0 auto }
+.table 		{
+	display: table;
+	width: 100%;
+}
+.table-cell {
+	display: table-cell;
+	padding: 20px;
+	padding-left: 0;
+}
+.input-wrapper 	{ width: 50%; }
+.input.calc 	{ background: #cdcdcd }
+
+.normal-text 	{ font-size: 20px }
+.bigger-text	{ font-size: 30px }
+.small-text 	{ font-size: 16px }
+
+.small-width 	{ width: 50px }
+.normal-width 	{ width: 100px }
+.bigger-width 	{ width: 150px }
+
+.error 			{ border: 1px solid red }
+//
+.action-button { margin-top: 20px }
