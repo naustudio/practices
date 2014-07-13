@@ -1,14 +1,20 @@
 .body {
   font-size: 16px;
+  font-family: Ubuntu;
 }
 .body p,
 .body h3 {
   line-height: 1.6em;
 }
 
+input, select {
+  font-family: Ubuntu;
+  font-size: 16px;
+}
+
 .wrapper {
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .table {
@@ -18,12 +24,28 @@
 
 .table-cell {
   display: table-cell;
-  padding: 20px;
-  padding-left: 0;
+}
+
+.input-val {
+  border-radius: 0;
+  border: none;
+  background: none;
+  border-bottom: 1px solid #0080ff;
+  padding: 10px;
 }
 
 .input-wrapper {
   width: 50%;
+  padding-top: 20px;
+}
+
+.output-wrapper {
+  padding-top: 10px;
+}
+
+.output-content {
+  padding: 10px;
+  padding-left: 0;
 }
 
 .input.calc {
@@ -42,22 +64,121 @@
   font-size: 16px;
 }
 
-.small-width {
-  width: 50px;
+.tiny-width {
+  width: 25%;
 }
 
-.normal-width {
-  width: 100px;
+.half-width {
+  width: 50%;
 }
 
-.bigger-width {
-  width: 150px;
+.full-width {
+  width: 100%;
 }
 
-.error {
+.input.error {
   border: 1px solid red;
+}
+
+.input.error:hover {
+  border-color: red;
+}
+
+.underline {
+  display: inline-block;
+  border-bottom: 1px solid;
+}
+
+.list {
+  -webkit-transform: translate3d(0, 0, 0);
+  max-height: 200px;
+  overflow-y: scroll;
+  margin-right: 20px;
+}
+.list .item {
+  border-bottom: 1px solid #0080ff;
+  vertical-align: middle;
+}
+.list .clear {
+  cursor: pointer;
+  vertical-align: middle;
+  background: transparent;
+  transition: font-size .4s;
+}
+.list .clear:hover {
+  font-size: 25px;
+  color: red;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #0080ff;
+  background: transparent;
+  border: 1px solid #0080ff;
+  border-radius: 5px;
+  transition: background .4s;
+}
+.btn:active {
+  background: #0080ff;
+  color: #fff;
+}
+.btn:hover {
+  background: #0080ff;
+  color: #fff;
+}
+
+.result-list {
+  padding: 10px;
+  border-bottom: 1px solid #cdcdcd;
 }
 
 .action-button {
   margin-top: 20px;
+}
+
+.select-wrapper {
+  display: inline-block;
+  border: 1px solid #0080ff;
+  position: relative;
+  padding: 0;
+}
+.select-wrapper:after, .select-wrapper:before {
+  content: '';
+  width: 1px;
+  background: #0080ff;
+  height: 15px;
+  position: absolute;
+  top: 30%;
+  right: 17px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.select-wrapper:before {
+  right: 27px;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.select-wrapper .select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 5px 50px 5px 10px;
+  color: #0080ff;
+  cursor: pointer;
+}
+.select-wrapper .select:focus {
+  outline: none;
+}
+
+.content {
+  display: none;
 }

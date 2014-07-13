@@ -1,29 +1,145 @@
+$main-color: rgb(0, 128, 255);
+$border-width: 1px;
+
 .body {
 	font-size: 16px;
+	font-family: Ubuntu;
 	p,
 	h3 	{ line-height: 1.6em }
 }
-.wrapper 	{ max-width: 1000px; margin: 0 auto }
+input, select {
+	font-family: Ubuntu;
+	font-size: 16px;
+}
+.wrapper 	{ max-width: 1000px; margin: 20px auto }
 .table 		{
 	display: table;
 	width: 100%;
 }
 .table-cell {
 	display: table-cell;
-	padding: 20px;
-	padding-left: 0;
+	// padding: 20px;
+	// padding-left: 0;
 }
-.input-wrapper 	{ width: 50%; }
+
+.input-val {
+	border-radius: 0;
+	border: none;
+	background: none;
+	border-bottom: $border-width solid $main-color;
+	padding: 10px
+}
+
+.input-wrapper 	{ width: 50%; padding-top: 20px }
+.output-wrapper	{ padding-top: 10px }
+.output-content	{ padding: 10px; padding-left: 0 }
 .input.calc 	{ background: #cdcdcd }
 
 .normal-text 	{ font-size: 20px }
 .bigger-text	{ font-size: 30px }
 .small-text 	{ font-size: 16px }
 
-.small-width 	{ width: 50px }
-.normal-width 	{ width: 100px }
-.bigger-width 	{ width: 150px }
+.tiny-width 	{ width: 25% }
+.half-width 	{ width: 50% }
+.full-width 	{ width: 100% }
 
-.error 			{ border: 1px solid red }
+.input.error 	{ border: 1px solid red }
+.input.error:hover 	{ border-color: red }
+
+.underline { display: inline-block; border-bottom: 1px solid }
+.list 	{
+	-webkit-transform: translate3d(0, 0, 0);
+	max-height: 200px;
+	overflow-y: scroll;
+	margin-right: 20px;
+
+	.item {
+		border-bottom: $border-width solid $main-color;
+		vertical-align: middle;
+	}
+	.clear {
+		cursor: pointer;
+		vertical-align: middle;
+		background: transparent;
+		transition: font-size .4s;
+		&:hover {
+			font-size: 25px;
+			color: red;
+		}
+	}
+}
+
+.btn {
+	display: inline-block;
+	padding: 10px 20px;
+	text-decoration: none;
+	color: $main-color;
+	background: transparent;
+	border: $border-width solid $main-color;
+	border-radius: 5px;
+	// box-shadow: inset 2px 0 3px rgba(0, 0, 0, .4);
+	transition: background .4s;
+	&:active {
+		// margin-top: 1px;
+		background: $main-color;
+		color: #fff;
+	}&:hover {
+		background: $main-color;
+		color: #fff;
+	}
+}
+
+
+.result-list 	{ padding: 10px; border-bottom: $border-width solid #cdcdcd }
 //
-.action-button { margin-top: 20px }
+.action-button 	{ margin-top: 20px }
+
+// select box
+.select-wrapper {
+	// margin: 3em;
+	display: inline-block;
+	border: $border-width solid rgb(0, 128, 255);
+	position: relative;
+	padding: 0;
+
+	&:after,
+	&:before {
+		content: '';
+		width: $border-width;
+		background: rgb(0, 128, 255);
+		height: 15px;
+		position: absolute;
+		top: 30%;
+		right: 17px;
+		-webkit-transform: rotate(45deg);
+		-moz-transform: rotate(45deg);
+		-o-transform: rotate(45deg);
+		transform: rotate(45deg)
+	}
+
+	&:before {
+		right: 27px;
+		-webkit-transform: rotate(-45deg);
+		-moz-transform: rotate(-45deg);
+		-o-transform: rotate(-45deg);
+		transform: rotate(-45deg)
+	}
+	.select {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		-o-appearance: none;
+		appearance: none;
+		background: none;
+		border: none;
+		padding: 5px 50px 5px 10px;
+		color: rgb(0, 128, 255);
+		cursor: pointer;
+	}
+
+	.select:focus {
+	  outline: none;
+	}
+}
+
+.content { display: none }
+

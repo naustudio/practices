@@ -18,8 +18,9 @@ function Functions() {
 		var sumValue = 0;
 
 		for (var i = 0; i < array.length; i++) {
-			if (parseInt(array[i])) {
-				sumValue += array[i];
+			var val = parseInt(array[i]);
+			if (val) {
+				sumValue += val;
 			} else {
 				return false;
 			}
@@ -119,17 +120,20 @@ function Functions() {
 	 * @param  {array} arr2 array 2
 	 * @return {array}      result
 	 */
-	this.collectSameValue = function(arr1, arr2) {
-		var array1 = arr1 || [];
-		var array2 = arr2 || [];
+	this.collectSameValue = function(arrays) {
+		var array1 = arrays[0] || [];
+		var array2 = arrays[1] || [];
 		var results = [];
 		array1.forEach(function(item1) {
 			array2.forEach(function(item2) {
 				if (item1 === item2) {
 					results.push(item1);
+					return;
 				}
 			});
 		});
+
+		results = this.removeSameValueArray(results);
 
 		return results;
 	};
@@ -140,29 +144,45 @@ function Functions() {
 	 * @param  {array} arr2 second array
 	 * @return {array}      result
 	 */
-	this.collectDiffValue = function(arr1, arr2) {
-		var array1 = arr1 || [];
-		var array2 = arr2 || [];
+	this.collectDiffValue = function(arrays) {
+		// var array1 = arr1 || [];
+		// var array2 = arr2 || [];
 		var results = [];
-		var sameEl = this.collectSameValue(arr1, arr2);
+		var sameEl = this.collectSameValue(arrays);
 
-		array1.forEach(function(item1) {
-			sameEl.forEach(function(item2) {
-				if (item1 !== item2) {
-					results.push(item1);
-				}
+		arrays.forEach(function(item) {
+			item.forEach(function(item1) {
+				sameEl.forEach(function(item2) {
+					if (item1 !== item2) {
+						results.push(item1);
+					}
+				});
 			});
 		});
 
-		array2.forEach(function(item1) {
-			sameEl.forEach(function(item2) {
-				if (item1 !== item2) {
-					results.push(item1);
-				}
-			});
-		});
+		results = this.removeSameValueArray(results);
 
 		return results;
+	};
+
+	this.removeSameValueArray = function(array) {
+		var result = [];
+		var found = false;
+
+		array.forEach(function(val1) {
+			result.forEach(function(val2) {
+				found = false;
+				if (val1 === val2) {
+					found = true;
+					return;
+				}
+			});
+			if (!found) {
+				result.push(val1);
+			}
+		});
+
+		return result;
 	};
 
 	/**
@@ -172,7 +192,7 @@ function Functions() {
 	this.getDate = function() {
 		var today = new Date();
 		var months = ['Jan', 'Ferb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-		var date = today.getDay();
+		var date = today.getDate();
 		var month = months[today.getMonth()];
 		var year = today.getFullYear();
 
@@ -207,6 +227,7 @@ function Functions() {
 	 */
 	this.calcAgeWithYearMonth = function(birthday) {
 		var today = new Date();
+		birthday = new Date(birthday[0]);
 		var yearOfAge = today.getFullYear() - birthday.getFullYear();
 		var monthOfAge = today.getMonth() - birthday.getMonth();
 		var yearStr = 'year';
@@ -234,9 +255,19 @@ function Functions() {
 	 * @param  {[type]} string [description]
 	 * @return {[type]}        [description]
 	 */
-	this.showResult = function($, string) {
+	this.showResult = function($, result) {
 		$('.output-content').empty();
-		$('.output-content').append(string);
+		var outputStr = '';
+
+		if (Array.isArray(result)) {
+			result.forEach(function(item){
+				outputStr += '<div class="result-list half-width normal-text">' + item + '</div>';
+			});
+		} else {
+			outputStr = result;
+		}
+
+		$('.output-content').append(outputStr);
 	};
 
 	/**
@@ -258,70 +289,70 @@ function Functions() {
  * main function
  * @return {void}
  */
-function main() {
-	var functions = new Functions();
-	var result = '';
-	var resultArr = [];
-	var arr = [];
-	// arrays to compare
-	var arr1 = [];
-	var arr2 = [];
-	var birthday = '5/15/1991';
-	// 1.
-	arr = [3, 5, 89];
-	result = 'Max of three number: ' + maxOfThree(arr);
-	showConsole(result);
+// function main() {
+// 	var functions = new Functions();
+// 	var result = '';
+// 	var resultArr = [];
+// 	var arr = [];
+// 	// arrays to compare
+// 	var arr1 = [];
+// 	var arr2 = [];
+// 	var birthday = '5/15/1991';
+// 	// 1.
+// 	arr = [3, 5, 89];
+// 	result = 'Max of three number: ' + maxOfThree(arr);
+// 	showConsole(result);
 
-	// 2.1
-	result = 'Sum of ' + arr + ': ' + sum(arr);
-	showConsole(result);
+// 	// 2.1
+// 	result = 'Sum of ' + arr + ': ' + sum(arr);
+// 	showConsole(result);
 
-	// 2.2
-	result = 'Multiply + of ' + arr + ': ' + multiply(arr);
-	showConsole(result);
+// 	// 2.2
+// 	result = 'Multiply + of ' + arr + ': ' + multiply(arr);
+// 	showConsole(result);
 
-	//3.
-	var words = ['cat', 'dog', 'dragon', 'bird'];
-	result = 'words: ' + words + ' sort --> ' + sortAlplabet(words);
-	showConsole(result);
+// 	//3.
+// 	var words = ['cat', 'dog', 'dragon', 'bird'];
+// 	result = 'words: ' + words + ' sort --> ' + sortAlplabet(words);
+// 	showConsole(result);
 
-	// 4.
-	result = 'The length of longest word is: ' + findLongestWord(words);
-	showConsole(result);
+// 	// 4.
+// 	result = 'The length of longest word is: ' + findLongestWord(words);
+// 	showConsole(result);
 
-	// 5.
-	var compareValue = 3;
-	result = 'The words longer than ' + compareValue;
-	resultArr = filterLongWords(words, compareValue);
-	result += resultArr.toString();
+// 	// 5.
+// 	var compareValue = 3;
+// 	result = 'The words longer than ' + compareValue;
+// 	resultArr = filterLongWords(words, compareValue);
+// 	result += resultArr.toString();
 
-	showConsole(result);
+// 	showConsole(result);
 
-	// set value
-	arr1 = ['coconut', 'mango', 'cheery'];
-	arr2 = ['bird', 'coconut', 'animal', 'tiger'];
+// 	// set value
+// 	arr1 = ['coconut', 'mango', 'cheery'];
+// 	arr2 = ['bird', 'coconut', 'animal', 'tiger'];
 
-	// 6.
-	result = 'Elelements appear in two arrays: ' + arr1.toString() + ' and ' + arr2.toString();
-	showConsole(result);
-	resultArr = collectSameValue(arr1, arr2);
-	showConsole(resultArr.toString());
+// 	// 6.
+// 	result = 'Elelements appear in two arrays: ' + arr1.toString() + ' and ' + arr2.toString();
+// 	showConsole(result);
+// 	resultArr = collectSameValue(arr1, arr2);
+// 	showConsole(resultArr.toString());
 
-	// 7.
-	result = 'Elelements not appear in two arrays: ' + arr1.toString() + ' and ' + arr2.toString();
-	showConsole(result);
-	resultArr = collectDiffValue(arr1, arr2);
-	showConsole(resultArr.toString());
+// 	// 7.
+// 	result = 'Elelements not appear in two arrays: ' + arr1.toString() + ' and ' + arr2.toString();
+// 	showConsole(result);
+// 	resultArr = collectDiffValue(arr1, arr2);
+// 	showConsole(resultArr.toString());
 
-	// 8.
-	result = 'Today is: ' + getDate();
-	showConsole(result);
+// 	// 8.
+// 	result = 'Today is: ' + getDate();
+// 	showConsole(result);
 
-	// 9.
-	showConsole(sayHello());
+// 	// 9.
+// 	showConsole(sayHello());
 
-	// 10.
-	var birthdayDate = new Date(birthday);
-	result = calcAgeWithYearMonth(birthdayDate);
-	showConsole(result);
-}
+// 	// 10.
+// 	var birthdayDate = new Date(birthday);
+// 	result = calcAgeWithYearMonth(birthdayDate);
+// 	showConsole(result);
+// }
