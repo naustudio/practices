@@ -31,7 +31,7 @@ input, select {
 }
 
 .input-wrapper 	{ width: 50%; padding-top: 20px }
-.output-wrapper	{ padding-top: 10px }
+.output-wrapper	{ padding: 10px 0 0 10px }
 .output-content	{ padding: 10px; padding-left: 0 }
 .input.calc 	{ background: #cdcdcd }
 
@@ -61,9 +61,8 @@ input, select {
 		cursor: pointer;
 		vertical-align: middle;
 		background: transparent;
-		transition: font-size .4s;
+		transition: color .4s;
 		&:hover {
-			font-size: 25px;
 			color: red;
 		}
 	}

@@ -1,12 +1,5 @@
-
-// var $button = document.getElementById('button');
-
-// $button.addEventListener('click', function() {
-// 	main();
-// });
-
 /**
- * function
+ * main function
  */
 (function($) {
 	$(document).ready(function() {
@@ -14,6 +7,7 @@
 		var result = '';
 		var array = [];
 		var numCompare = 0;
+		var ERROR_MSG = 'There is error';
 
 		$('.body').on('change', '.actions', function() {
 			var id = $(this).val();
@@ -114,7 +108,7 @@
 				if (inputNo === $('.input').length) {
 					result = functions[action](values);
 				} else {
-					result = 'Error';
+					result = ERROR_MSG;
 				}
 
 				functions['showResult']($, result);
@@ -142,7 +136,7 @@
 				if (vals.length === $('.input').length) {
 					result = functions[action](vals, numCompare);
 				} else {
-					result = 'Error';
+					result = ERROR_MSG;
 				}
 
 				functions['showResult']($, result);
@@ -151,7 +145,7 @@
 
 		$('.wrapper').on('click', '.push-to-arr', function(e) {
 			e.preventDefault();
-			$el = $(this).parent();
+			var $el = $(this).parent();
 			var val = $el.find('.insert-input').val();
 			// do nothing when input is empty
 			if (val === '') {
@@ -161,7 +155,7 @@
 			var itemTemplate = '';
 			// push to array
 			array.push(val);
-			itemTemplate = '<div class="item half-width table"><input type="text" disabled class="input table-cell" data-type="text" value="'+val+'"><span class="clear table-cell" data-index="' + array.indexOf(val) + '">x</span></div>';
+			itemTemplate = '<div class="item half-width table"><input type="text" disabled class="input table-cell" data-type="text" value="' + val + '"><span class="clear table-cell" data-index="' + array.indexOf(val) + '">x</span></div>';
 			$el.find('.list').append(itemTemplate);
 			$el.find('.insert-input').val('');
 		});
@@ -176,7 +170,7 @@
 
 		$('.wrapper').on('keyup', '.input-val', function(e) {
 			// Enter
-			if (e.keyCode == 13) {
+			if (e.keyCode === 13) {
 				$('.push-to-arr').click();
 			}
 		});

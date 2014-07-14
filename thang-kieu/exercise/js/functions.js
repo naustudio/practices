@@ -116,9 +116,8 @@ function Functions() {
 
 	/**
 	 * collect the same value of 2 array
-	 * @param  {array} arr1 array 1
-	 * @param  {array} arr2 array 2
-	 * @return {array}      result
+	 * @param  {[type]} arrays [description]
+	 * @return {[type]}        [description]
 	 */
 	this.collectSameValue = function(arrays) {
 		var array1 = arrays[0] || [];
@@ -140,9 +139,8 @@ function Functions() {
 
 	/**
 	 * collect different value of 2 array
-	 * @param  {array} arr1 first array
-	 * @param  {array} arr2 second array
-	 * @return {array}      result
+	 * @param  {[type]} arrays [description]
+	 * @return {[type]}        [description]
 	 */
 	this.collectDiffValue = function(arrays) {
 		// var array1 = arr1 || [];
@@ -171,7 +169,7 @@ function Functions() {
 
 		array.forEach(function(val1) {
 			result.forEach(function(val2) {
-				found = false;
+				// found = false;
 				if (val1 === val2) {
 					found = true;
 					return;
@@ -285,74 +283,3 @@ function Functions() {
 		}
 	};
 }
-/**
- * main function
- * @return {void}
- */
-// function main() {
-// 	var functions = new Functions();
-// 	var result = '';
-// 	var resultArr = [];
-// 	var arr = [];
-// 	// arrays to compare
-// 	var arr1 = [];
-// 	var arr2 = [];
-// 	var birthday = '5/15/1991';
-// 	// 1.
-// 	arr = [3, 5, 89];
-// 	result = 'Max of three number: ' + maxOfThree(arr);
-// 	showConsole(result);
-
-// 	// 2.1
-// 	result = 'Sum of ' + arr + ': ' + sum(arr);
-// 	showConsole(result);
-
-// 	// 2.2
-// 	result = 'Multiply + of ' + arr + ': ' + multiply(arr);
-// 	showConsole(result);
-
-// 	//3.
-// 	var words = ['cat', 'dog', 'dragon', 'bird'];
-// 	result = 'words: ' + words + ' sort --> ' + sortAlplabet(words);
-// 	showConsole(result);
-
-// 	// 4.
-// 	result = 'The length of longest word is: ' + findLongestWord(words);
-// 	showConsole(result);
-
-// 	// 5.
-// 	var compareValue = 3;
-// 	result = 'The words longer than ' + compareValue;
-// 	resultArr = filterLongWords(words, compareValue);
-// 	result += resultArr.toString();
-
-// 	showConsole(result);
-
-// 	// set value
-// 	arr1 = ['coconut', 'mango', 'cheery'];
-// 	arr2 = ['bird', 'coconut', 'animal', 'tiger'];
-
-// 	// 6.
-// 	result = 'Elelements appear in two arrays: ' + arr1.toString() + ' and ' + arr2.toString();
-// 	showConsole(result);
-// 	resultArr = collectSameValue(arr1, arr2);
-// 	showConsole(resultArr.toString());
-
-// 	// 7.
-// 	result = 'Elelements not appear in two arrays: ' + arr1.toString() + ' and ' + arr2.toString();
-// 	showConsole(result);
-// 	resultArr = collectDiffValue(arr1, arr2);
-// 	showConsole(resultArr.toString());
-
-// 	// 8.
-// 	result = 'Today is: ' + getDate();
-// 	showConsole(result);
-
-// 	// 9.
-// 	showConsole(sayHello());
-
-// 	// 10.
-// 	var birthdayDate = new Date(birthday);
-// 	result = calcAgeWithYearMonth(birthdayDate);
-// 	showConsole(result);
-// }
