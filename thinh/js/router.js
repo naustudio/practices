@@ -1,11 +1,13 @@
-define([ 'jquery','underscore','backbone','views/list','views/detail'], function($, _, Backbone, WineListView, WineDetailView) {
+define([ 'jquery','underscore','backbone','views/WineListView','views/WineListItemView','views/WineListPaginatorView'],
+	function($, _, Backbone, WineListView, WineDetailView,WineListPaginatorView) {
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			// Define some URL routes
-			'': 'home',
-			'wines'		: 'list',
-			'wines/add'		: 'home',
-			'wines/:id'		: 'detail'
+			''					: 'home',
+			'wines'				: 'list',
+			'wines/page/:page'	: 'list',
+			'wines/add'			: 'home',
+			'wines/:id'			: 'detail'
 		},
 		home: function() {
 			$('#content').html('Loading....');
@@ -14,9 +16,13 @@ define([ 'jquery','underscore','backbone','views/list','views/detail'], function
 			var wineDetail = new WineDetailView();
 			wineDetail.render(id);
 		},
-		list: function() {
+		list: function(page) {
+			var p = page ? parseInt(page, 10) : 1;
 			var wineListView = new WineListView();
-			wineListView.render();
+			console.log(wineListView);
+			wineListView.render(p);
+			$('.thumbnails').after((new WineListPaginatorView).render(p).el);
+			//console.log((new WineListPaginatorView).render().el);
 		},
 		initialize: function () {
 			//alert('router initialize');
@@ -25,7 +31,7 @@ define([ 'jquery','underscore','backbone','views/list','views/detail'], function
 	});
 
 	var initialize = function() {
-		window.app = new AppRouter();
+		window.Winestore.appRouter = new AppRouter();
 		Backbone.history.start({
 			root: '/'
 		});

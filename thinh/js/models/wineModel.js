@@ -3,7 +3,7 @@ define([
 ],  function(Backbone) {
 	var WineModel = Backbone.Model.extend({
 
-		urlRoot: '/json/wines.json',
+		//urlRoot: '/json/wines.json',
 
 		idAttribute: '_id',
 

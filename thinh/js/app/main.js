@@ -1,9 +1,15 @@
 define([
-	'router'
-],	function(Router/*common,categories,product*/)	{
+	'router',
+	'collections/WineCollection',
+],	function(Router,WineCollection)	{
 	return	{
 		initialize: function() {
-			Router.initialize();
+			new WineCollection().fetch({
+				success: function(data) {
+					window.Winestore.wineCollection = data;
+					Router.initialize();
+				}
+			});
 		}
 	};
 });

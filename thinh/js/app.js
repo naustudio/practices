@@ -16,5 +16,9 @@ requirejs.config({
 
 // Start loading the main app file.
 requirejs(['app/main','jquery','bootstrap','underscore','backbone'], function (App, $, Bootstrap, _, Backbone){
-	App.initialize();
+	window.Winestore = {
+		initRouter: App.initialize,
+		perPage : 8,
+	};
+	window.Winestore.initRouter();
 });
