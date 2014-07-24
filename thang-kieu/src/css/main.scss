@@ -1,0 +1,299 @@
+/**
+ * main style
+ * @author Thang Kieu
+ *
+ */
+/**
+ * Reset css
+ */
+@import "reset.scss";
+@import "components.scss";
+// font
+@import url("http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic");
+
+$max-width: 1280px;
+$normal-font-size: 1.1em;
+$b-radius: 3px;
+
+body {
+	font-size: 16px;
+	font-family: 'Ubuntu', sans-serif;
+	background: #F8F8FF;
+}
+input { outline: none; }
+// * {
+// 	-webkit-transform: translate3d(0, 0, 0);
+// 	-moz-transform: translate3d(0, 0, 0);
+// 	-o-transform: translate3d(0, 0, 0);
+// 	transform: translate3d(0, 0, 0);
+// 	cursor: default
+// }
+
+@mixin border() {
+	border-radius: $b-radius;
+
+}
+.content-wrapper {
+	max-width: $max-width;
+	width: 100%;
+	margin: 100px auto;
+	// text-align: center;
+	// background: #FFFAF0;
+	.clearfix {
+		&:before {
+			content: '';
+			display: table;
+			clear: both
+		}
+		&:after {
+			content: '';
+			display: table;
+		}
+	}
+
+}
+
+[class^="icon-"] {
+	margin-right: 5px;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	background: url('../img/glyphicons-halflings.png');
+}
+// icon
+.icon-region {
+	background-position: 137px 20px;
+}
+
+.icon-add {
+	background-position: 375px 92px;
+}
+.icon-add-white {
+	background: url('../img/glyphicons-halflings-white.png');
+	background-position: 375px 92px;
+}
+
+.product-list {
+	text-align: center;
+	.action-center {
+		margin: 1% 0;
+	}
+	.sort {
+		display: inline-block;
+		font-size: .9em;
+	}
+	.search.text-input {
+		border-bottom-color: #999;
+		border-bottom-width: 2px;
+		width: 40%;
+		margin-right: 2%;
+		font-size: 1em;
+	}
+}
+// product
+.product-container {
+	display: inline-block;
+	width: 100%;
+	max-width: 270px;
+	background: #FFF;
+	// border: 1px solid transparent;
+	// border-bottom-width: 5px;
+	border-radius: 5px;
+	margin: 20px;
+	overflow: hidden;
+	box-shadow:
+		0 2px 1px rgba(0, 0, 0, 0),
+		2px 0 1px rgba(0, 0, 0, 0),
+		2px 2px 3px rgba(0, 0, 0, 0);
+	.product-content {
+		text-align: center;
+		padding: 20px 10px 0;
+	}
+	.product-image 	{ width: 125px; }
+	.product-des-container {
+		padding: 10px 0;
+	}
+	.product-name 	{
+		text-transform: uppercase;
+		padding-bottom: 10px;
+		font-weight: bold;
+	}
+	.product-year {
+		font-size: 1em;
+		padding-bottom: 10px;
+	}
+	.product-more-detail {
+		width: 100%;
+		display: block;
+		text-align: center;
+		background: transparent;
+		color: #111;
+		text-decoration: none;
+		text-transform: uppercase;
+		padding: 15px 0;
+		&:hover {
+			background: #1E90FF;
+			color: whitesmoke;
+			-webkit-transition: color, background .8s;
+			-moz-transition: color, background .8s;
+			-o-transition: color, background .8s;
+			transition: color, background .8s;
+		}
+	}
+	&:hover {
+		// border-color: #999;
+		box-shadow:
+			0 2px 1px rgba(0, 0, 0, .3),
+			2px 0 1px rgba(0, 0, 0, .3),
+			2px 2px 3px rgba(0, 0, 0, .5);
+		-webkit-transition: box-shadow .8s;
+		-moz-transition: box-shadow .8s;
+		-o-transition: box-shadow .8s;
+		transition: box-shadow .8s;
+	}
+}
+
+// pagination
+.pagination {
+	text-align: center;
+	padding: 20px 0;
+	.page {
+		text-decoration: none;
+		font-size: 1.2em;
+		padding: 3px 10px;
+	}
+
+}
+
+// header
+.header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	// height: 60px;
+	background: transparent;// #bdbdbd;
+	z-index: 1;
+	box-shadow:
+		0 1px 3px rgba(0, 0, 0, .8),
+		0 5px 15px rgba(0, 0, 0, .5);
+	.nav {
+		padding: 10px 0;
+		max-width: $max-width;
+		margin: 0 auto;
+	}
+	.item {
+		border-radius: 5px;
+		border: 1px solid transparent;
+		box-shadow: inset 0 2px 3px transparent;
+		display: inline-block;
+		transition: border, box-shadow .5s;
+		a {
+			color: #111;
+			display: block;
+			text-decoration: none;
+			padding: 10px 20px;
+		}
+		&:last-child {
+			float: right;
+		}
+		&:hover {
+			border-color: #999;
+			box-shadow: inset 0 2px 3px #111;
+			-webkit-transition: border, box-shadow 1s;
+			-moz-transition: border, box-shadow 1s;
+			-o-transition: border, box-shadow 1s;
+		}
+		&:active {
+			box-shadow:
+				0 3px 15px rgba(0, 0, 0, .5),
+		}
+	}
+	&.scroll {
+		background-color: rgba(0, 0, 0, .9);
+		-webkit-transition: background-color .5s;
+		-moz-transition: background-color .5s;
+		-o-transition: background-color .5s;
+		a { color: whitesmoke; }
+	}
+}
+
+// product-detail
+.product-detail-wrapper {
+	.product-title 	{
+		.title {
+			padding: 30px 0;
+			font-weight: bold;
+		}
+		border-bottom: 2px solid #999;
+	}
+	.product-detail-content {
+		font-size: 1em;
+		padding: 30px 0;
+		display: table;
+	}
+	.product-image-wrapper,
+	.product-info 	{
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.product-image {
+		width: 100%;
+		background: white;
+		padding: 30px 0px;
+		border-radius: 10px;
+		box-shadow: 0 1px 3px #111,0 5px 8px #999;
+	}
+	.product-image-wrapper {
+		width: 30%;
+		text-align: center;
+	}
+	.row-field {
+		padding-bottom: 20px;
+		display: table;
+		width: 100%;
+	}
+	.label {
+		display: table-cell;
+		width: 20%;
+		text-align: right;
+		padding-right: 10px;
+		vertical-align: middle;
+		font-size: 1.2em;
+	}
+	.text-input,
+	.select-input {
+		display: table-cell;
+		padding: 10px;
+		font-size: 1.1em;
+	}
+	.text-input { width: 80% }
+	.product-action {
+		padding: 20px 0;
+		border-top: 2px solid #999;
+		.button {
+			display: inline-block;
+			margin-right: 20px;
+			width: 100px;
+			&:last-child {
+				margin: 0;
+			}
+		}
+	}
+}
+// error
+.error-msg {
+	color: red;
+	margin: 20px 0;
+}
+// animate
+@keyframes showBorder {
+	0%, 100% { border-color: transparent }//border-color: transparent; }
+	50% { border-color: #999 }//border-color: #999; }
+}
+// block
+@media only screen and (max-width: $max-width) {
+	.header .nav,
+	.content-inner {
+		margin: 0 20px;
+	}
+}

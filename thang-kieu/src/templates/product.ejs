@@ -1,0 +1,15 @@
+<div class="product-container">
+	<div class="product-content <%= name %>">
+		<div class="image-wrapper">
+			<a href="#!<%= _id %>" class="image-link">
+				<img src="src/pics/<%= picture %>" alt="<%= name %>" class="product-image">
+			</a>
+		</div>
+		<div class="product-des-container">
+			<h2 class="product-name uppercase"><%= name %></h2>
+			<p class="product-year"><span class="year"><%= year %></span> <span class="grapes"><%= grapes %></span></p>
+			<p class="product-region-wrapper"><i class="icon-region"></i><span class="product-region"><%= region %></span>, <span class="product-country"><%= country %></span></p>
+		</div>
+	</div>
+	<a href="#wines/<%= _id %>" class="product-more-detail uppercase" data-id="<%= _id %>">Detail</a>
+</div><!-- .# end product -->
