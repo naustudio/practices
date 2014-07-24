@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="maincss.css">
+	</head>
+	<body>
+		<section id="wraper">
+		<a href="#DetailWine/" class="linkWine">
+			<div class="wines">
+				<span class="img"><img src='abc' /></span><br>
+				<span class="name"></span><br>
+				<span class='year'></span>
+				<span class='grapes'></span><br>
+				<span class='region'></span>
+				<span class='country'></span>
+			</div>
+		</a>
+		</section>
+
+		<section id='DetailWine' style="Display: none">
+			<label>Detail Wine</label>
+			<hr>
+			<div>
+				<table>
+					<tr>
+						<td>Id<input id="picture" type='hidden' /></td>
+						<td><input id="id" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Name</td>
+						<td><input id="name" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Grape</td>
+						<td><input id="grapes" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Year</td>
+						<td><input id="year" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Regions</td>
+						<td><input id="region" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Country</td>
+						<td><input id="country" type='text' /></td>
+					</tr>
+					<tr>
+						<td class='title'>Note</td>
+						<td><textarea id="note"></textarea></td>
+					</tr>
+					<tr>
+						<td><input id="saveWine" type='button' value="Save"/></td>
+						<td><input id="deleteWine" type='button' value="Delete"/></td>
+					</tr>
+				</table>
+				<div class='imgDetail'>retryerhj</div>
+			</div>
+		</section>
+		<script src="jquery-1.11.0.min.js" type="text/javascript"></script>
+		<script src="wine.js" type="text/javascript"></script>
+	</body>
+
+
+</html>
