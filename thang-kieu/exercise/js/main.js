@@ -7,7 +7,7 @@
 		var result = '';
 		var array = [];
 		var numCompare = 0;
-		var ERROR_MSG = 'There is error';
+		var ERROR_MSG = 'There is/are error(s)';
 
 		$('.body').on('change', '.actions', function() {
 			var id = $(this).val();
