@@ -40,7 +40,7 @@ input, select {
 }
 
 .output-wrapper {
-  padding-top: 10px;
+  padding: 10px 0 0 10px;
 }
 
 .output-content {
@@ -103,10 +103,9 @@ input, select {
   cursor: pointer;
   vertical-align: middle;
   background: transparent;
-  transition: font-size .4s;
+  transition: color .4s;
 }
 .list .clear:hover {
-  font-size: 25px;
   color: red;
 }
 
