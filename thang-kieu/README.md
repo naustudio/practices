@@ -1,4 +1,7 @@
+# WINE EXERCISE
+
 How to setup development environment
+
 1. Install node & all dependency for this app
 2. Start web-server
 - run "grunt"
@@ -14,5 +17,7 @@ Assignments
 2. Create page for product detail when selecting on a particular product.
 
 
-NEW 
-- update
+# HOW TO RUN REQUIREJS EXERCISE
+1. Open Terminal at `require_ex` folder
+2. Go to: http://localhost:8080 to view the FAQ List page.
+
